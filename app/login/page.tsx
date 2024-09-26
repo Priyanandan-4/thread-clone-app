@@ -28,7 +28,7 @@ const Page = () => {
             className="bg-[#201d1d] appearance-none rounded-xl block w-full px-3 py-3 mt-2 placeholder-gray-500 text-white"
           />
 
-          <button className="bg-white rounded-xl block w-full px-3 py-3 mt-2 text-gray-500 hover:bg-gray-200">
+          <button className="bg-white rounded-xl block w-full px-3 py-3 mt-2 text-gray-900 hover:bg-gray-200">
             Log in
           </button>
 
