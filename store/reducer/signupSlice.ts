@@ -79,4 +79,3 @@ const signupSlice = createSlice({
 })
 
 export const {setName, setUsername, setEmail, setPassword, setPhone, setConfirmPassword}=signupSlice.actions
-export default signupSlice.reducer

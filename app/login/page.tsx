@@ -27,10 +27,10 @@ const Login: React.FC = () => {
     //   return;
     // }
 
-    const user = users.find(user => user.email === email); // Assuming username matches email here
+    const user = users.find(user => user.email === email);
     if (user) {
       localStorage.setItem('userId', user._id);
-      console.log(user);
+      // console.log(user);
       router.push('/main');
     } else {
       console.log('User does not exist, redirect to the signup page');
