@@ -11,7 +11,7 @@ const Page: React.FC = () => {
       {/* Main content div that scrolls */}
       <div className="flex-grow bg-[#181818] p-4 rounded-lg flex items-center justify-center overflow-y-auto">
         {/* Main content goes here */}
-        Content goes here
+       
       </div>
     </div>
   );
