@@ -10,7 +10,7 @@ function Layout({ children }: { children: React.ReactNode }) {
             </div>
 
             {/* Main Content Centered */}
-            <div className="w-[640px] h-auto bg-black text-center rounded border-slate-600"> {/* Adjust margin-left based on the width of SideBar */}
+            <div className="w-[640px] h-auto bg-black  rounded border-slate-600"> {/* Adjust margin-left based on the width of SideBar */}
                 {children}
             </div>
         </div>
