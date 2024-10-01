@@ -20,17 +20,14 @@ const Page: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      {/* 'foryou' div - fixed at the top */}
       <div className="h-16 flex items-center justify-center bg-black text-white">
         foryou
       </div>
-
-      {/* Main content div that scrolls */}
-      <div className="h-screen bg-[#181818] p-4 rounded-lg  overflow-auto no-scrollbar">
+      <div className="h-screen bg-[#181818] p-4 rounded-lg overflow-auto scrollbar-hide">
         {status === "succeeded" && (
           <div>
             {posts.map((post: any) => (
-              <div key={post._id} className="p-4 mb-4  text-white rounded-lg">
+              <div key={post._id} className="p-4 mb-4 text-white rounded-lg">
                 <p>{post.text}</p>
                 {post.image && <img src={post.image} alt="Post" className="mt-2" />}
               </div>
