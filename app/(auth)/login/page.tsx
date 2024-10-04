@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import BG from '../../../public/img/bg.webp';
-import { useAppDispatch, useAppSelector } from '../../fonts/hooks/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/store/reducer/loginSlice';
 // import { fetchUser } from '@/store/reducer/loginSlice';

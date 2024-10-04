@@ -1,6 +1,7 @@
+import axiosInstance from "@/API/axiosinstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { sign } from "crypto";
+ 
+ 
 
 
 interface signUpdetails {
@@ -28,17 +29,16 @@ const initialState : signUpdetails = {
 export const signupUser = createAsyncThunk('signup/signupUser',
     async (userData : {name :string; username: string; email: string; password: string; phone: string},{rejectWithValue})=>{
         try{
-            const response = await axios.post('https://social-media-rest-apis.onrender.com/api/users/signup')
+            const response = await  axiosInstance.post('/users/signup', userData)
             return response.data
         } catch (error: any) {
-            // Send backend error message as rejected value
             return rejectWithValue(error.response.data.message);
         }
         
     }
 )
 
-const signupSlice = createSlice({
+ const signupSlice = createSlice({
     name:'signupUser',
     initialState,
     reducers:{
@@ -78,4 +78,6 @@ const signupSlice = createSlice({
 
 })
 
-export const {setName, setUsername, setEmail, setPassword, setPhone, setConfirmPassword}=signupSlice.actions
+export default signupSlice.reducer;
+
+export const {setName, setUsername, setEmail, setPassword, setPhone, setConfirmPassword}= signupSlice.actions

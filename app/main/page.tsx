@@ -2,22 +2,22 @@
 
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "@/store/reducer/postsSlice"; // Import fetchPosts thunk
-import { AppDispatch, RootState } from "@/store/store"; // Import AppDispatch and RootState from your store
+import { fetchPosts } from "@/store/reducer/postsSlice"; 
+import { AppDispatch, RootState } from "@/store/store"; 
 
 const Page: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>(); // Use AppDispatch for dispatch typing
+  const dispatch = useDispatch<AppDispatch>();
 
-  // Select posts and status from the Redux store
-  const { posts, status } = useSelector((state: RootState) => state.posts);
+  
+  const { posts, status,} = useSelector((state: RootState) => state.posts);
 
   // Fetch posts on component mount
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchPosts()); // Dispatch the fetchPosts thunk action
+      dispatch(fetchPosts()); 
     }
   }, [dispatch, status]);
-
+console.log(posts)
   return (
     <div className="flex flex-col h-screen">
       <div className="h-16 flex items-center justify-center bg-black text-white">
@@ -27,12 +27,14 @@ const Page: React.FC = () => {
         {status === "succeeded" && (
           <div>
             {posts.map((post: any) => (
+
               <div key={post._id} className="p-4 mb-4 text-white rounded-lg">
+                 <p>{post.postById.user}</p>
                 <p>{post.text}</p>
                 {post.image && <img src={post.image} alt="Post" className="mt-2" />}
               </div>
             ))}
-          </div>
+          </div> 
         )}
         {status === "failed" && <p>Failed to load posts.</p>}
       </div>
