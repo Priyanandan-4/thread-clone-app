@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: 'https://social-media-rest-apis.onrender.com/api',
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
 
 // axiosInstance.interceptors.request.use((config) => {
