@@ -31,13 +31,15 @@ const initialState: PostsState = {
     error: null,
 };
 
-// Async action for fetching posts
+// fetching posts
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
     const response = await axiosInstance.get('/posts');
     return response.data.posts;
 });
 
-// Async action for adding a new post
+
+
+//adding post 
 export const addPost = createAsyncThunk(
     "posts/addPost",
     async (newPost: { userId: string; text: string; image: string }, { rejectWithValue }) => {
@@ -54,7 +56,7 @@ export const addPost = createAsyncThunk(
     }
 );
 
-// Posts slice with reducers and extra reducers
+
 const postSlice = createSlice({
     name: "posts",
     initialState,

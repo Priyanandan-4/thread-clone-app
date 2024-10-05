@@ -61,7 +61,7 @@ const Signup: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="bg-transparent p-6 rounded-lg shadow-lg w-full sm:w-8/12 md:w-6/12 lg:w-4/12 xl:w-3/12 mt-5">
         <h2 className="text-lg font-semibold text-center mb-4 text-white">Create your Account</h2>
-        {status === 'loading' && <p className="text-center text-white">Signing up...</p>}
+        {/* {status === 'loading' && <p className="text-center text-white">Signing up...</p>} */}
         {error && <p className="text-center text-red-500">{error}</p>}
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
           {() => (
