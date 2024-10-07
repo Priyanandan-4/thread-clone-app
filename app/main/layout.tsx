@@ -21,6 +21,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
       <div className="fixed left-0 top-0 h-full flex items-center">
         <SideBar />
+        
       </div>
 
 
@@ -31,7 +32,7 @@ function Layout({ children }: { children: React.ReactNode }) {
      
       {user ? (
          
-        <Link href="/Auth">
+        <Link href="/login">
           <button
             onClick={handleLogout}
             className="absolute top-4 right-4 flex justify-center items-center text-black text-sm py-2 px-4 rounded-lg bg-white hover:text-black h-8"
@@ -42,7 +43,7 @@ function Layout({ children }: { children: React.ReactNode }) {
         </Link>
       ) : (
         // If the user is not logged in, show Login button
-        <Link href='/Auth'>
+        <Link href='/login'>
           <button className="absolute top-4 right-4 flex justify-center items-center text-black text-sm py-2 px-4 rounded-lg bg-white hover:text-black h-8">
             Login
           </button>

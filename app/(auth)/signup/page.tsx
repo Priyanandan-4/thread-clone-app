@@ -6,6 +6,7 @@ import { useAppSelector, useAppDispatch } from '@/app/hooks/useAppDispatch';
 import { setName, setUsername, setEmail, setPhone, setPassword, setConfirmPassword, signupUser } from '@/store/reducer/signupSlice';
 import { RootState } from "@/store/store";
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 const Signup: React.FC = () => {
   const router = useRouter();
@@ -115,6 +116,12 @@ const Signup: React.FC = () => {
               <button type="submit" className="bg-white rounded-xl w-full px-3 py-3 mt-2 text-black" disabled={status === 'loading'}>
                 Sign Up
               </button>
+              <Link href='/login'>
+              <button type="submit" className="bg-transparent rounded-xl w-full px-3 py-3 mt-2 text-white" disabled={status === 'loading'}>
+                You already have account?
+               
+              </button>
+              </Link>
             </Form>
           )}
         </Formik>

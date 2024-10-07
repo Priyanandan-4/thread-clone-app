@@ -7,28 +7,25 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { useRouter } from 'next/navigation';
 import { loginUser } from '@/store/reducer/loginSlice';
 
-
 const Login: React.FC = () => {
   const [username, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { user,status,error } = useAppSelector((state) => state.login);
+  const { user, status, error } = useAppSelector((state) => state.login);
 
   useEffect(() => {
     if (status === 'succeeded' && user) {
-        const userId = user._id;
-        localStorage.setItem('userId', userId);
-        router.push('/main');
-        console.log(userId)
+      const userId = user._id;
+      localStorage.setItem('userId', userId);
+      router.push('/main');
+      console.log(userId);
     }
-}, [status, user, router]);
-
+  }, [status, user, router]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(loginUser({username,password}));
-   
+    dispatch(loginUser({ username, password }));
   };
 
   return (
@@ -61,6 +58,10 @@ const Login: React.FC = () => {
               aria-label="Password"
             />
 
+            {status === 'failed' && error && (
+              <p className="text-red-500 text-sm mt-2">User not found or incorrect password</p>
+            )}
+
             <button
               type="submit"
               className="bg-white rounded-xl block w-full px-3 py-3 mt-2 text-gray-900 hover:bg-gray-200 focus:ring-2 focus:ring-gray-300"
@@ -75,10 +76,11 @@ const Login: React.FC = () => {
               <p className="px-2 text-gray-400 text-sm">or</p>
               <div className="w-full h-px bg-gray-400"></div>
             </div>
-             <Link href = '/signup'>
-            <button className="bg-transparent rounded-xl block w-full px-3 py-3 mt-2 text-white">
-              Sign up
-            </button>
+
+            <Link href="/signup">
+              <button className="bg-transparent rounded-xl block w-full px-3 py-3 mt-2 text-white">
+                Sign up
+              </button>
             </Link>
           </div>
         </div>

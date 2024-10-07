@@ -1,9 +1,10 @@
-import Image from "next/image";
+import UploadModal from "@/components/modal/modal";
+
 
 export default function Home() {
   return (
     <>
-    huhi
+   
     </>
   );
 }
