@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { loginUser } from '@/store/reducer/loginSlice';
 
 const Login: React.FC = () => {
-  const [username, setEmail] = useState('');
+  const [username, setUsername] = useState('');  // Corrected the state name
   const [password, setPassword] = useState('');
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(loginUser({ username, password }));
+    dispatch(loginUser({ username, password })); // Dispatch with correct state values
   };
 
   return (
@@ -44,8 +44,8 @@ const Login: React.FC = () => {
             <input
               type="text"
               placeholder="Username"
-              value={username}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}  // Correct binding for username
+              onChange={(e) => setUsername(e.target.value)}  // Correct state setter
               className="bg-[#201d1d] appearance-none rounded-xl w-full block px-3 py-3 mt-2 placeholder-gray-500 text-white"
               aria-label="Email"
             />

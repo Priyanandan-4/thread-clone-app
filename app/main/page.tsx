@@ -1,165 +1,139 @@
-'use client';
-
+"use client"
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
+import { useAppDispatch ,useAppSelector} from '../hooks/useAppDispatch';
 import { fetchUser } from '@/store/reducer/userSlice';
-import { fetchPosts, addPost } from '@/store/reducer/postsSlice';
+import { fetchPosts } from '@/store/reducer/postsSlice';
+import ProfileImage from '../../components/profileimage/page'
+import Comment from '@/components/comment/comment';
+import TimeAgo from '@/components/timelog/page';
+import LikeButton from '@/components/likebutton/page';
+import CommentButton from '../../components/commentButton/page'
+import { CiHeart } from "react-icons/ci";
 
-const HomePage: React.FC = () => {
-    const dispatch = useAppDispatch();
-    const { users } = useAppSelector((state) => state.users);
-    const { posts } = useAppSelector((state) => state.posts);
-    const [currentUser, setCurrentUser] = useState<any>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [username, setUserName] = useState<string>('');
-    const [postContent, setPostContent] = useState<string>('');
-    const [postImage, setPostImage] = useState<any>(null);
-    const [preview, setPreview] = useState<string | null>(null);
+const Page = () => {
+  const dispatch = useAppDispatch();
+  const { users } = useAppSelector((state) => state.users);
+  const { posts } = useAppSelector((state) => state.posts);
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [userId, setUserId] = useState<string>('');
+  const [userProfilePic, setProfilePic] = useState<string>('');
+  const [username, setUserName] = useState<string>('');
+  const [postId, setPostId] = useState<string>('');
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+  const openComment = () => setIsCommentOpen(true);
+  const closeComment = () => setIsCommentOpen(false);
 
-    useEffect(() => {
-        dispatch(fetchUser());
-        dispatch(fetchPosts());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchUser())
+    dispatch(fetchPosts())
+  }, [dispatch])
 
-    useEffect(() => {
-        const userId = localStorage.getItem('userId');
-        if (userId && users.length > 0) {
-            const user = users.find((user) => user._id === userId);
-            if (user) {
-                setCurrentUser(user);
-                setUserName(user.username || '');
-            }
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if (userId && users.length > 0) {
+        const user = users.find((user) => user._id === userId);
+        if (user) {
+            setCurrentUser(user);
+            setUserName(user.username || '');
         }
-    }, [users]);
+    }
+}, [users]);
 
-    const handlePostChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setPostContent(event.target.value);
-    };
+  useEffect(() => {
+    if (currentUser) {
+      setUserId(currentUser._id);
+      if (currentUser.profilePic) {
+        setProfilePic(currentUser.profilePic);
+      } else {
+        setProfilePic('https://cdn-icons-png.flaticon.com/512/149/149071.png');
+      }
+    }
+  }, [currentUser]);
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setPostImage(file);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreview(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const handlePostSubmit = async () => {
-        if (postContent.trim() === '') {
-            alert('Please write something before posting!');
-            return;
-        }
-        if (!currentUser) {
-            alert('User not found! Please log in.');
-            return;
-        }
-        const newPost = {
-            userId: currentUser._id,
-            text: postContent,
-            image: postImage,
-        };
-
-        dispatch(addPost(newPost)); // Ensure you use the correct action creator
-        setPostContent('');
-        setPostImage(null); // Reset the image after posting
-        setPreview(null); // Reset the preview after posting
-        closeModal(); // Close the modal after posting
-    };
-
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen text-white bg-[#0a0a0a] ">
-            <div className='sticky top-0 bg-[#0a0a0a] w-full text-center py-3 z-50'>
-                <div className="text-1xl font-bold">For you</div>
-            </div>
-            <div className="bg-[#181818] sticky rounded-3xl p-4 w-full max-w-xl">
-                <div className="flex justify-between items-center mb-4 border-b border-gray-600 pb-2">
-                    <div className="flex items-center">
-                        <img
-                            src={currentUser?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
-                            alt="profile"
-                            className="w-10 h-10 rounded-full"
-                        />
-                        <span className="ml-2">What's new?</span>
-                    </div>
-                    <button
-                        onClick={openModal}
-                        className="bg-blue-600 text-white rounded px-4 py-2"
-                    >
-                        Post
-                    </button>
-                </div>
-
-                {isModalOpen && (
-                    <div className="mb-4">
-                        <div className="flex items-center mb-4">
-                            <img
-                                src={currentUser?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
-                                alt="profile"
-                                className="w-10 h-10 rounded-full"
-                            />
-                            <p className="ml-2 text-lg">{username}</p>
-                        </div>
-                        <textarea
-                            name="thread"
-                            id="thread"
-                            placeholder="Write a post"
-                            value={postContent}
-                            onChange={handlePostChange}
-                            className="w-full h-24 p-2 bg-gray-800 text-white rounded mb-2"
-                        />
-                        {preview && (
-                            <img src={preview} alt="Preview" className="w-full h-auto mb-2 rounded" />
-                        )}
-                        <div className="flex items-center mb-4">
-                            <input
-                                type="file"
-                                id="file-upload"
-                                accept="image/*"
-                                onChange={handleImageChange}
-                                className="hidden"
-                            />
-                            <label htmlFor="file-upload" className="cursor-pointer text-blue-600">
-                                Upload Image
-                            </label>
-                        </div>
-                        <button
-                            className="bg-blue-600 text-white rounded px-4 py-2"
-                            onClick={handlePostSubmit}
-                        >
-                            Post
-                        </button>
-                    </div>
-                )}
-
-                <div className="flex flex-col mt-4">
-                    {posts.map((post) => (
-                        <div key={post._id} className="bg-[#181818] rounded-lg p-4 mb-4 border-b border-gray-600">
-                            <div className="flex items-center mb-2">
-                                <img
-                                    src={post.postById?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
-                                    alt="profile"
-                                    className="w-10 h-10 rounded-full"
-                                />
-                                <div className="ml-2">
-                                    <p className="font-semibold">{post.postById.username}</p>
-                                    <span className="text-gray-400 text-sm">{post.createdOn}</span>
-                                </div>
-                            </div>
-                            <p className="mb-2">{post.text}</p>
-                            {post.image && <img src={post.image} alt="post" className="rounded mb-2" />}
-                        </div>
-                    ))}
-                </div>
-            </div>
+  return (
+    <>
+      <Comment
+        isOpen={isCommentOpen}
+        onClose={closeComment}
+        postId={postId}
+        userProfilePic={userProfilePic}
+        userId={userId}
+        username={username}
+      >
+        <div>
+          <div>
+            <img src={currentUser?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+              alt='Profile'
+              className='main-profile-f' />
+            <p className='main-profile-name'>{username}</p>
+          </div>
         </div>
-    );
-};
+      </Comment>
+      <div className='main-heading'>For you</div>
+      <div className="flex items-center justify-center h-screen pt-9">
+        <div className="h-full  bg-[#201d1d] rounded-3xl">
+          <div className='main-posts-container'>
+            <div className='main-new-container'>
+              <div className='main-new'>
+                <div className='main-dp'>
+                  <ProfileImage
+                    profilePic={currentUser?.profilePic}
+                    altText="profile"
+                    className='main-profile-image'
+                  />
+                </div>
+                <div className='main-text'>
+                  <span>What's new?</span>
+                </div>
+              </div>
+              <button className='main-post-button'>Post</button>
+            </div>
 
-export default HomePage;
+            <div className='main-post-list'>
+              {posts.map((post) => (
+                <div key={post._id} className='main-post-item'>
+                  <div className='main-post-user'>
+                    <img src={post.postById?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+                      alt="profile" className='main-profile-image'></img>
+                    <div className='main-text-username'>
+                      <div className='main-username-time'>
+                        <p className='main-profile-name'>{post.postById.username}</p>
+                        <span className='main-time'>
+                          <TimeAgo dateString={post.createdOn}></TimeAgo>
+                        </span>
+                      </div>
+                      <p className='main-post-text'>{post.text}</p>
+                    </div>
+                  </div>
+                  {post.image && <img src={post.image} alt='Post' className='main-post-image' />}
+                  <div className='main-post-icons'>
+                    {currentUser ? (
+                      <LikeButton
+                        initialLike={post.likes.length}
+                        postId={post._id}
+                        userId={currentUser._id}
+                        likedUsers={post.likes}
+                      ></LikeButton>
+                    ):(
+                      <CiHeart className='comment-like-button' style={{ fontSize: '26px'}}/>
+                    )}
+                    <br></br>
+                    <div className='main-reply' onClick={()=>{
+                      openComment();
+                      setPostId(post._id)
+                    }}>
+                      <CommentButton CommentCount={post.replies.length}></CommentButton>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Page;
