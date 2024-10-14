@@ -1,139 +1,85 @@
-"use client"
-import React, { useEffect, useState } from 'react';
-import { useAppDispatch ,useAppSelector} from '../hooks/useAppDispatch';
-import { fetchUser } from '@/store/reducer/userSlice';
-import { fetchPosts } from '@/store/reducer/postsSlice';
-import ProfileImage from '../../components/profileimage/page'
-import Comment from '@/components/comment/comment';
-import TimeAgo from '@/components/timelog/page';
-import LikeButton from '@/components/likebutton/page';
-import CommentButton from '../../components/commentButton/page'
-import { CiHeart } from "react-icons/ci";
 
-const Page = () => {
-  const dispatch = useAppDispatch();
-  const { users } = useAppSelector((state) => state.users);
-  const { posts } = useAppSelector((state) => state.posts);
-  const [isCommentOpen, setIsCommentOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState<any>(null);
-  const [userId, setUserId] = useState<string>('');
-  const [userProfilePic, setProfilePic] = useState<string>('');
-  const [username, setUserName] = useState<string>('');
-  const [postId, setPostId] = useState<string>('');
+'use client'
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addPost, fetchPosts } from "@/store/reducer/postsSlice"; 
+import { AppDispatch, RootState } from "@/store/store"; 
 
-  const openComment = () => setIsCommentOpen(true);
-  const closeComment = () => setIsCommentOpen(false);
+import { useAppSelector } from "../hooks/useAppDispatch";
+
+const Page: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { posts, status } = useSelector((state: RootState) => state.posts);
+  const { user } = useAppSelector((state) => state.login); // Check if the user is logged in
+  
+  const [isModalOpen, setModalOpen] = useState(false); // State to control modal visibility
 
   useEffect(() => {
-    dispatch(fetchUser())
-    dispatch(fetchPosts())
-  }, [dispatch])
-
-  useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    if (userId && users.length > 0) {
-        const user = users.find((user) => user._id === userId);
-        if (user) {
-            setCurrentUser(user);
-            setUserName(user.username || '');
-        }
+    if (status === "idle") {
+      dispatch(fetchPosts());
     }
-}, [users]);
+  }, [dispatch, status]);
 
-  useEffect(() => {
-    if (currentUser) {
-      setUserId(currentUser._id);
-      if (currentUser.profilePic) {
-        setProfilePic(currentUser.profilePic);
-      } else {
-        setProfilePic('https://cdn-icons-png.flaticon.com/512/149/149071.png');
-      }
-    }
-  }, [currentUser]);
+;
 
   return (
-    <>
-      <Comment
-        isOpen={isCommentOpen}
-        onClose={closeComment}
-        postId={postId}
-        userProfilePic={userProfilePic}
-        userId={userId}
-        username={username}
-      >
-        <div>
-          <div>
-            <img src={currentUser?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
-              alt='Profile'
-              className='main-profile-f' />
-            <p className='main-profile-name'>{username}</p>
-          </div>
-        </div>
-      </Comment>
-      <div className='main-heading'>For you</div>
-      <div className="flex items-center justify-center h-screen pt-9">
-        <div className="h-full  bg-[#201d1d] rounded-3xl">
-          <div className='main-posts-container'>
-            <div className='main-new-container'>
-              <div className='main-new'>
-                <div className='main-dp'>
-                  <ProfileImage
-                    profilePic={currentUser?.profilePic}
-                    altText="profile"
-                    className='main-profile-image'
-                  />
-                </div>
-                <div className='main-text'>
-                  <span>What's new?</span>
-                </div>
-              </div>
-              <button className='main-post-button'>Post</button>
-            </div>
-
-            <div className='main-post-list'>
-              {posts.map((post) => (
-                <div key={post._id} className='main-post-item'>
-                  <div className='main-post-user'>
-                    <img src={post.postById?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
-                      alt="profile" className='main-profile-image'></img>
-                    <div className='main-text-username'>
-                      <div className='main-username-time'>
-                        <p className='main-profile-name'>{post.postById.username}</p>
-                        <span className='main-time'>
-                          <TimeAgo dateString={post.createdOn}></TimeAgo>
-                        </span>
-                      </div>
-                      <p className='main-post-text'>{post.text}</p>
-                    </div>
-                  </div>
-                  {post.image && <img src={post.image} alt='Post' className='main-post-image' />}
-                  <div className='main-post-icons'>
-                    {currentUser ? (
-                      <LikeButton
-                        initialLike={post.likes.length}
-                        postId={post._id}
-                        userId={currentUser._id}
-                        likedUsers={post.likes}
-                      ></LikeButton>
-                    ):(
-                      <CiHeart className='comment-like-button' style={{ fontSize: '26px'}}/>
-                    )}
-                    <br></br>
-                    <div className='main-reply' onClick={()=>{
-                      openComment();
-                      setPostId(post._id)
-                    }}>
-                      <CommentButton CommentCount={post.replies.length}></CommentButton>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+    <div className="flex flex-col h-screen">
+      <div className="h-16 flex items-center justify-center bg-black text-white">
+        foryou
       </div>
-    </>
+      <div className="h-screen bg-[#181818] p-4 rounded-lg overflow-auto scrollbar-hide">
+        <div className="flex items-center mb-4">
+          {user ? (
+            <>
+              <h2 className="text-white text-lg mr-3">What's New</h2>
+              <button
+                // onClick={() => setModalOpen(true)} // Open modal when the "Post" button is clicked
+                className="text-white py-2 text-sm px-4 border border-zinc-300 rounded-lg bg-transparent"
+              >
+                Post
+              </button>
+            </>
+          ) : (
+            <p></p>
+          )}
+        </div>
+
+        {/* Modal component */}
+        {/* <UploadModal
+          isOpen={isModalOpen} // Modal visibility state
+          onClose={() => setModalOpen(false)} // Close modal function
+          onUpload={handleUpload} // Upload function when a file is uploaded
+        /> */}
+
+        {status === "succeeded" && (
+          <div>
+            {posts.map((post: any) => (
+              <div key={post._id} className="p-4 mb-4 text-white rounded-lg">
+                <div className="flex items-center">
+                  <img
+                    src={post.postById?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+                    className="w-10 h-10 rounded-full object-cover mr-3"
+                    alt="User Profile"
+                  />
+                  <p>{post.postById?.username || "Unknown User"}</p>
+                </div>
+                <p className="mt-2">{post.text}</p>
+                {post.image && (
+                  <img
+                    src={post.image}
+                    alt="Post"
+                    className="mt-2 rounded-lg object-cover w-full max-h-[500px]"
+                  />
+                )}
+                <hr className="border-t border-gray-600 my-4 opacity-50 w-full" />
+              </div>
+            ))}
+          </div>
+        )}
+        {status === "failed" && <p className="text-white">Failed to load posts.</p>}
+      </div>
+    </div>
   );
-}
+};
 
 export default Page;
