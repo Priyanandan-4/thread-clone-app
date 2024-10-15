@@ -6,12 +6,14 @@ import HEART from '../../public/img/heart-gray.svg'
 import SGRAY from '../../public/img/search-gray.svg'
 import PLUS from '../../public/img/plus.svg'
 import Image from 'next/image';
+import Link from 'next/link';
 
 
 const SideBar = () => {
   return (
     <div>
         <div className='ml-1 h-screen w-20'>
+          <Link href='/main'>
           <Image
           src={THREAD}
           alt='thread'
@@ -19,8 +21,9 @@ const SideBar = () => {
           width={30}
           className='m-5'
           />
+          </Link>
           <div>
-            
+          <Link href='/main'>
           <Image
           src={HOME}
           alt='home logo'
@@ -28,6 +31,8 @@ const SideBar = () => {
           width={25}
           className='m-5 mt-36 BG' 
           />
+          </Link>
+          
           <Image
           src={SGRAY}
           alt='search'
@@ -52,6 +57,7 @@ const SideBar = () => {
           
           className='m-5 mt-10'
           />
+          <Link href='/main/UserProfile'>
             <Image
           src={USER}
           alt='search'
@@ -60,6 +66,7 @@ const SideBar = () => {
           
           className='m-5 mt-10 '
           />
+          </Link>
           
           </div>
         </div>

@@ -4,10 +4,10 @@
 
 import Link from 'next/link';
 import React from 'react';
+import SideBar from '@/components/SideBar/sideBar';
 import { useAppDispatch,useAppSelector } from '../hooks/useAppDispatch';
 // import { useAppSelector,useAppDispatch } from '../fonts/hooks/useAppDispatch';
 import { logoutUser } from '@/store/reducer/loginSlice'; // Import your logout action
-import SideBar from '@/components/SideBar/sideBar';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
@@ -23,13 +23,28 @@ function Layout({ children }: { children: React.ReactNode }) {
     <div className="flex justify-center items-center h-screen bg-black relative">
       {/* Sidebar Fixed on the Left */}
       <div className="fixed left-0 top-0 h-full flex items-center">
-      <SideBar/>
+      <SideBar />
       </div>
 
       {/* Main Content Centered */}
       <div className="w-[640px] h-auto bg-black rounded border-slate-600">
         {children}
+
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {/* Conditionally Render Login or Logout Button */}
       {user ? (
