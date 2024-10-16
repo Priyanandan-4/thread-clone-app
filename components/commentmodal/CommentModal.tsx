@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 
 interface CommentModalProps {
@@ -27,16 +28,13 @@ const CommentModal: React.FC<CommentModalProps> = ({ isOpen, onClose, onComment 
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             className="w-full p-2 border-s rounded bg-[#181818]"
-          
-         
             required
           />
           <button type="submit" className="mt-2 px-4 py-2 rounded bg-black text-white">
             Submit
           </button>
-          <button onClick={onClose} className=" ml-5 mt-2 px-4 py-2 rounded bg-black text-white">Close</button>
+          <button type="button" onClick={onClose} className="ml-5 mt-2 px-4 py-2 rounded bg-black text-white">Close</button>
         </form>
-        
       </div>
     </div>
   );

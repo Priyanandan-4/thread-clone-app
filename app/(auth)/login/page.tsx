@@ -21,7 +21,7 @@ const Login: React.FC = () => {
       router.push('/main');
       console.log(userId);
     }
-  }, [status, user, router]);
+  }, [ user]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="relative w-full h-screen">
-      <Image
+      <Image 
         src={BG}
         alt="background"
         objectFit="cover"
