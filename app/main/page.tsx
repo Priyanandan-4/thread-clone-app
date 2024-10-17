@@ -1,14 +1,14 @@
-'use client';
+"use client";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPost, fetchPosts } from "@/store/reducer/postsSlice"; 
-import { AppDispatch, RootState } from "@/store/store"; 
-import { CiHeart } from "react-icons/ci";
+import { addPost, fetchPosts } from "@/store/reducer/postsSlice";
+import { AppDispatch, RootState } from "@/store/store";
 import { FaRegComment } from "react-icons/fa6";
-import CommentModal from "@/components/commentmodal/CommentModal"; 
+import CommentModal from "@/components/commentmodal/CommentModal";
 import { useAppSelector } from "../hooks/useAppDispatch";
 import PostBtn from "@/components/postbutton/postBtn";
-import Threads from "@/components/threads/threads"; // Assuming you saved your Threads component
+import Threads from "@/components/postmodal/postModal";
+import LikeButton from "@/components/likeButton/likeButton";
 
 const Page: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,7 +20,7 @@ const Page: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchPosts());
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   const handleCommentSubmit = (comment: string) => {
     console.log(`Comment on post ${currentPostId}: ${comment}`);
@@ -33,7 +33,10 @@ const Page: React.FC = () => {
         <div key={post._id} className="text-white mb-4 mt-5">
           <div className="flex items-center">
             <img
-              src={post.postById?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+              src={
+                post.postById?.profilePic ||
+                "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              }
               className="w-10 h-10 rounded-full object-cover mr-3"
               alt="User Profile"
             />
@@ -48,7 +51,15 @@ const Page: React.FC = () => {
             />
           )}
           <div className="mt-3 flex space-x-4">
-            <CiHeart style={{ fontSize: "26px" }} />
+         
+            <LikeButton
+              initialLike={post.likes.length}
+              postId={post._id}
+              userId={user?._id}
+              likedUsers={post.likes}
+            />
+            
+
             <FaRegComment
               style={{ fontSize: "22px", cursor: "pointer" }}
               onClick={() => {
@@ -62,26 +73,40 @@ const Page: React.FC = () => {
       ));
     }
 
-    return <p className="text-white">Failed to load posts.</p>;
+    return null;
   };
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="h-16 flex items-center justify-center bg-black text-white">for you</div>
-      <div className="h-screen bg-[#181818] p-4 rounded-lg overflow-auto scrollbar-hide">
+      <div className="h-16 flex items-center justify-center bg-black text-white">
+        for you
+      </div>
+
+      <div className="h-screen bg-[#181818]  p-4 rounded-lg overflow-auto ">
+        <div className="flex items-center">
+          <img
+            src={
+              user?.profilePic ||
+              "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            }
+            className="w-10 h-10 rounded-full object-cover mr-3"
+            alt="User Profile"
+          />
+          <p>{user?.username || "Unknown User"}</p>
+        </div>
+
         <PostBtn onClick={() => setIsModalOpen(true)} />
+        <hr className="border-t border-gray-600 my-4 opacity-50 w-full" />
         {renderPosts()}
       </div>
+   
 
       <CommentModal
         isOpen={isCommentModalOpen}
         onClose={() => setCommentModalOpen(false)}
         onComment={handleCommentSubmit}
       />
-      <Threads
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      >
+      <Threads isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h2 className="text-white">Create a new post</h2>
       </Threads>
     </div>

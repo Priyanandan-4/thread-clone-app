@@ -25,7 +25,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(loginUser({ username, password })); // Dispatch with correct state values
+    dispatch(loginUser({ username, password })); // Dispatch 
   };
 
   return (
@@ -44,8 +44,8 @@ const Login: React.FC = () => {
             <input
               type="text"
               placeholder="Username"
-              value={username}  // Correct binding for username
-              onChange={(e) => setUsername(e.target.value)}  // Correct state setter
+              value={username}  
+              onChange={(e) => setUsername(e.target.value)}  
               className="bg-[#201d1d] appearance-none rounded-xl w-full block px-3 py-3 mt-2 placeholder-gray-500 text-white"
               aria-label="Email"
             />

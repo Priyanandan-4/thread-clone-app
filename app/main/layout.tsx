@@ -1,22 +1,15 @@
 
 'use client'
-
-
-import Link from 'next/link';
 import React from 'react';
 import SideBar from '@/components/SideBar/sideBar';
 import { useAppDispatch,useAppSelector } from '../hooks/useAppDispatch';
-// import { useAppSelector,useAppDispatch } from '../fonts/hooks/useAppDispatch';
-import { logoutUser } from '@/store/reducer/loginSlice'; // Import your logout action
+
+
 
 function Layout({ children }: { children: React.ReactNode }) {
-  const dispatch = useAppDispatch();
+  
   const { user } = useAppSelector((state) => state.login); 
-  // Function to handle logout
-  const handleLogout = () => {
-    dispatch(logoutUser()); // Dispatch the logout action
-    localStorage.clear(); // Clear user ID from localStorage
-  };
+ 
 
   return (
     <div className="flex justify-center items-center h-screen bg-black relative">
@@ -25,7 +18,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       <SideBar />
       </div>
 
-      {/* Main Content Centered */}
+      {/* Main ContentCentered */}
       <div className="w-[640px] h-auto bg-black rounded border-slate-600">
         {children}
 

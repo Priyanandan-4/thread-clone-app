@@ -26,7 +26,7 @@ const Threads: React.FC<ThreadsProps> = ({ isOpen, onClose, children }) => {
     }
     
     const newPostFormData = new FormData();
-    newPostFormData.append('userId', userId);
+    newPostFormData.append('userId', userId);  
     newPostFormData.append('text', postContent);
     newPostFormData.append('image', postImage);
 
@@ -93,7 +93,7 @@ const Threads: React.FC<ThreadsProps> = ({ isOpen, onClose, children }) => {
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
               <label className="flex items-center text-gray-300 cursor-pointer hover:text-white">
-                <span className="ml-2">Upload Image</span>
+                <button className="ml-2 border h-10 w-56 rounded-lg">Upload Image</button>
               </label>
             </div>
           </div>
