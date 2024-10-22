@@ -3,6 +3,7 @@
 import axios from "axios"
 import { CiHeart } from "react-icons/ci"
 
+
  
 interface LikeButtonProps {
     initialLike: number
@@ -48,7 +49,7 @@ const LikeButton = ({ initialLike, postId, userId, likedUsers }: LikeButtonProps
     return (   
         <button onClick={handleLike}>
           
-           <div className="flex"><CiHeart className="text-2xl"/><div>{like}</div></div> 
+           <div className="flex"><CiHeart className="text-2xl" /><div>{like}</div></div> 
             
         </button>
     )

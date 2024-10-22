@@ -1,5 +1,5 @@
 import React from 'react'
-import USERPROFILE from '@/components/userProfile/UserProfile'
+// import USERPROFILE from '@/components/userProfile/UserProfile'
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,7 +8,7 @@ function Layout({ children }: { children: React.ReactNode }) {
         Profile
       </div>
       <div className='top-0'>
-      <USERPROFILE />
+      {/* <USERPROFILE /> */}
       </div>
       <div className="mt-16"> {/* This margin ensures content does not go under the fixed header */}
         
