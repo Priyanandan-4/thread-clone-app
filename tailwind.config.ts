@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        customTeal: 'rgb(37, 150, 190)',
       },
     },
   },

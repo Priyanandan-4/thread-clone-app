@@ -74,8 +74,7 @@ const Threads: React.FC<ThreadsProps> = ({ isOpen, onClose, children }) => {
               placeholder="Write a post"
               value={postContent}
               onChange={handlePostChange}
-              className="bg-[#181818] p-4 rounded-lg shadow-sm text-base text-white resize-none outline-none"
-              rows={4}
+              className="bg-[#181818] outline-none"
             />
             {preview && (
               <div className="w-full max-h-[300px] overflow-hidden rounded-md">
@@ -90,11 +89,11 @@ const Threads: React.FC<ThreadsProps> = ({ isOpen, onClose, children }) => {
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
               <label className="flex items-center text-gray-300 cursor-pointer hover:text-white">
-                <button className="ml-2 border h-10 w-56 rounded-lg">Upload Image</button>
+                <button className="ml-2 mt-5 border h-10 w-40 rounded-lg">Upload Image</button>
               </label>
             </div>
           </div>
-          <div className="mt-6 flex justify-end">
+          <div className="mt-3 flex justify-end">
             <PostBtn onClick={handlePostSubmit} />
           </div>
         </div>

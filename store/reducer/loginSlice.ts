@@ -13,13 +13,12 @@ const initialState: UserState = {
   error: null,
 };
 
-// Thunk for logging in
-export const loginUser = createAsyncThunk(
+ export const loginUser = createAsyncThunk(
   'login/user',
   async (userData: { username: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post('/users/login', userData);
-      return response.data; // Assuming API returns user data
+      return response.data;  
     } catch (error: any) {
       return rejectWithValue(error.response.data); 
     }
@@ -39,8 +38,8 @@ const loginSlice = createSlice({
       state.error = null;
     },
     logoutUser: (state) => {
-      state.user = null; // Clear user on logout
-      state.status = 'idle'; // Reset status to idle
+      state.user = null; 
+      state.status = 'idle';  
     },
   },
   extraReducers: (builder) => {

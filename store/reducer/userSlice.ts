@@ -22,6 +22,7 @@ interface User{
     email: string;
     username: string;
     profilePic: string;
+    bio:string;
 }
 
  const initialState : Userstate={

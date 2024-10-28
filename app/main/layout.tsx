@@ -12,14 +12,14 @@ function Layout({ children }: { children: React.ReactNode }) {
  
 
   return (
-    <div className="flex justify-center items-center h-screen bg-black relative">
+    <div className="flex justify-center h-screen bg-black relative">
       {/* Sidebar Fixed on the Left */}
       <div className="fixed left-0 top-0 h-full flex items-center">
       <SideBar />
       </div>
 
       {/* Main ContentCentered */}
-      <div className="w-[640px] h-auto bg-black rounded border-slate-600">
+      <div className="w-[640px]">
         {children}
 
       </div>
