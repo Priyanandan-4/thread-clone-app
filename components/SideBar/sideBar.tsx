@@ -32,7 +32,7 @@ const SideBar = () => {
           className='m-5 mt-36 BG' 
           />
           </Link>
-          
+          <Link href='/main/SearchUser'>
           <Image
           src={SGRAY}
           alt='search'
@@ -41,6 +41,7 @@ const SideBar = () => {
           
           className='m-5 mt-10 '
           />
+          </Link>
             <Image
           src={PLUS}
           alt='search'

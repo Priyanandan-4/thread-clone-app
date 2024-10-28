@@ -46,7 +46,7 @@ const Profile = () => {
         <div className="w-full bg-transparent">
             <EditProfile isOpen={isEditModalOpen} onClose={handleEditProfileClose} />
             
-            <h1 className="h-[60px] flex items-center justify-center text-white text-2xl bg-transparent z-[1000]">
+            <h1 className="h-[60px] flex items-center justify-center text-white text-xl bg-transparent z-[1000]">
                 Profile
             </h1>
 

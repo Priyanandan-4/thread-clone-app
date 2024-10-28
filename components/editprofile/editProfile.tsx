@@ -21,6 +21,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ isOpen, onClose }) => {
             const fetchProfileData = async () => {
                 try {
                     const response = await axiosInstance.get(`/users/${localStorage.getItem('userId')}`);
+                    
                     if (response.status === 200) {
                         const userData = response.data.user;
                         setName(userData.name);
