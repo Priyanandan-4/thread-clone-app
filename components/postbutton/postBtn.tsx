@@ -18,7 +18,7 @@ const PostBtn: React.FC<PostBtnProps> = ({ onClick }) => {
 
  <>
     
-            <button onClick={onClick}   className='h-10 w-16 mt-3  bg-[#181818] text-white border rounded-lg '> Post</button>
+            <button onClick={onClick}   className='h-9 mr-3 w-16   bg-[#181818] text-white border border-[#2d2d2d] rounded-lg '> Post</button>
 
          
 

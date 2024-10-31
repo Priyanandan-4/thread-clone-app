@@ -1,6 +1,8 @@
 import React, { ReactNode, useState } from 'react';
 import PostBtn from '../postbutton/postBtn';
 import axiosInstance from '@/API/axiosinstance';
+import { useAppDispatch } from '@/app/hooks/useAppDispatch';
+import { fetchPosts } from '@/store/reducer/postsSlice';
 
 interface ThreadsProps {
   isOpen: boolean;
@@ -12,9 +14,11 @@ const Threads: React.FC<ThreadsProps> = ({ isOpen, onClose, children }) => {
   const [postContent, setPostContent] = useState<string>('');
   const [postImage, setPostImage] = useState<any>(null);
   const [preview, setPreview] = useState<string | null>(null);
-
+  const dispatch = useAppDispatch();
   const handlePostSubmit = async () => {
     const userId = localStorage.getItem('userId');
+
+   
 
     if (postContent.trim() === '') {
       alert('Please write something before posting!');
@@ -31,9 +35,10 @@ const Threads: React.FC<ThreadsProps> = ({ isOpen, onClose, children }) => {
     newPostFormData.append('image', postImage);
 
     try {
-      const res = await axiosInstance.post('/posts', newPostFormData);
+      const res = await axiosInstance.post('/posts', newPostFormData);``
       console.log("this is ", res);
       onClose();  
+      dispatch(fetchPosts())
     } catch (error) {
       console.error('Error adding new post:', error);
     }

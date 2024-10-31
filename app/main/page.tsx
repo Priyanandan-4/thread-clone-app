@@ -38,11 +38,11 @@ const Page: React.FC = () => {
 
     return (
         <div className="flex flex-col h-screen">
-            <div className="h-16 text-xl flex items-center justify-center bg-black text-white">
-                for you
+            <div className="h-[60px] text-xl flex items-center justify-center bg-black text-white">
+                For you
             </div>
 
-            <div className="h-screen bg-[#181818] p-4 rounded-t-3xl no-scrollbar overflow-y-auto border-2 border-[#2d2d2d]">
+            <div className="h-screen bg-[#181818] p-4 rounded-t-3xl no-scrollbar overflow-y-auto border border-[#2d2d2d]">
                 <Reply
                     isOpen={isCommentModalOpen}
                     onClose={() => setCommentModalOpen(false)}
@@ -63,19 +63,15 @@ const Page: React.FC = () => {
                             className="w-10 h-10 rounded-full object-cover mr-3"
                             alt="User Profile"
                         />
-                        <p className="font-bold">{user.username || "Unknown User"}</p>
+                        <p className="text-[#777777]">What's new?</p>
                     </div>
                     <PostBtn onClick={() => setIsModalOpen(true)} />
                 </div>
 
-                <hr className="border-t border-gray-600 my-4 opacity-50 w-full" />
+                <hr className="border-t border-[#2d2d2d] my-4 w-full" />
 
-                {status === "loading" ? (
-                    <p className="text-gray-400">Loading posts...</p>
-                ) : status === "failed" ? (
-                    <p className="text-red-500">Failed to load posts.</p>
-                ) : (
-                    posts.map((post: any) => (
+                
+                    {posts.map((post: any) => (
                         <div key={post._id} className="text-white mb-4">
                             <div className="flex items-center">
                                 <img
@@ -85,7 +81,7 @@ const Page: React.FC = () => {
                                 />
                                 <div>
                                     <div className="flex flex-row items-center">
-                                        <p className="font-bold mt-2">{post.postById?.username || "Unknown User"}</p>
+                                        <p className="font-bold mt-2">{post.postById.username || "Unknown User"}</p>
                                         <p className="text-gray-400 ml-2 mt-2 text-xs">
                                             <TimeAgo time={post.createdOn} />
                                         </p>
@@ -123,10 +119,11 @@ const Page: React.FC = () => {
                                     )}
                                 </div>
                             </div>
-                            <hr className="border-t border-gray-600 my-4 opacity-50 w-full" />
+                            <hr className="border-t border-[#2d2d2d] my-4 w-full" />
                         </div>
+                        
                     ))
-                )}
+                }
             </div>
         </div>
     );

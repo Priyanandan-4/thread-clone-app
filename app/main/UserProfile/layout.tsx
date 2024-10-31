@@ -11,7 +11,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       <div className='top-0'>
      
       </div>
-      <div className="mt-16"> {/* This margin ensures content does not go under the fixed header */}
+      <div> {/* This margin ensures content does not go under the fixed header */}
         
         {children}
       </div>

@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { loginUser } from '@/store/reducer/loginSlice';
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState('');  // Corrected the state name
+  const [username, setUsername] = useState('');  
   const [password, setPassword] = useState('');
   const dispatch = useAppDispatch();
   const router = useRouter();

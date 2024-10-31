@@ -1,6 +1,8 @@
 'use client'
 import React, { useEffect, useState, ReactNode } from 'react';
 import axiosInstance from '@/API/axiosinstance';
+import { useAppDispatch } from '@/app/hooks/useAppDispatch';
+import { fetchPosts } from '@/store/reducer/postsSlice';
 
 interface ReplyProps {
     isOpen: boolean;
@@ -18,6 +20,8 @@ const Reply: React.FC<ReplyProps> = ({ isOpen, onClose, postId, userId, userProf
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+    const dispatch =useAppDispatch();
+
 
     useEffect(() => {
         if (isOpen) {
@@ -48,6 +52,7 @@ const Reply: React.FC<ReplyProps> = ({ isOpen, onClose, postId, userId, userProf
             await axiosInstance.post(`/posts/${postId}/reply`, reply);
             setComment('');
             onClose();
+            dispatch(fetchPosts());
             setError(null);
         } catch (error) {
             console.error("Failed to reply to post:", error);

@@ -1,14 +1,12 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-// import ProfileImage from '@/components/ProfileImage';
-import ProfileImage  from './profileimage';
+import ProfileImage from './profileimage';
 import Link from 'next/link';
-import { useAppDispatch ,useAppSelector} from '@/app/hooks/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '@/app/hooks/useAppDispatch';
 import { fetchUser } from '@/store/reducer/userSlice';
 import EditProfile from '../editprofile/editProfile';
-// import EditProfile from '../editProfile/editProfile';
 
-const Profile = () => {
+const Profile: React.FC = () => {
     const dispatch = useAppDispatch();
     const { users } = useAppSelector((state) => state.users);
     const [name, setName] = useState<string>('');
@@ -16,6 +14,7 @@ const Profile = () => {
     const [profilePic, setProfilePic] = useState<string>('');
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
     const [userBio, setUserBio] = useState<string>('');
+    const [followers, setFollowers] = useState<string[]>([]);
 
     useEffect(() => {
         dispatch(fetchUser());
@@ -30,6 +29,7 @@ const Profile = () => {
                 setUserName(user.username || '');
                 setProfilePic(user.profilePic || '');
                 setUserBio(user.bio || '');
+                setFollowers(user.followers || []);
             }
         }
     }, [users]);
@@ -45,22 +45,21 @@ const Profile = () => {
     return (
         <div className="w-full bg-transparent">
             <EditProfile isOpen={isEditModalOpen} onClose={handleEditProfileClose} />
-            
+
             <h1 className="h-[60px] flex items-center justify-center text-white text-xl bg-transparent z-[1000]">
                 Profile
             </h1>
 
-            <div className="bg-[#181818] rounded-2xl h-full">
+            <div className="bg-[#181818] rounded-3xl h-screen fixed w-[640px] border border-[#2d2d2d]">
                 {/* Profile Section */}
                 <div className="flex justify-between items-center h-[140px] w-full p-5">
                     <div className="text-white">
-                        <h1 className="text-xl font-semibold">{name}</h1>
-                        <span className="text-gray-400 mt-2">{username}</span>
-                        <p className="text-gray-300 mt-3">
-                            {userBio}  
-                        </p>
+                        <h1 className="text-2xl font-semibold mt-10">{name}</h1>
+                        <h6 className="text-white text-sm">{username}</h6>
+                        <p className="text-white text-sm mt-6">{userBio}</p>
+                        <p className="text-white text-sm mt-4">{followers.length} Followers</p>
                     </div>
-                    <div className="w-[80px] h-[80px] mr-2.5">
+                    <div className="w-[75px] h-[75px] mr-2.5">
                         <ProfileImage
                             altText="Profile"
                             profilePic={profilePic}
@@ -69,33 +68,23 @@ const Profile = () => {
                     </div>
                 </div>
 
-                {/* Edit Profile Button */}
                 <div className="bg-[#181818] px-4">
-                    
-                        <div  className="border border-gray-600 rounded-2xl p-2.5 cursor-pointer hover:bg-gray-100  hover:text-black transition-colors text-center text-white w"
-                        onClick={handleEditProfileOpen}>
-                        Edit Profile
-                        </div>
+                    <div 
+                        className="flex h-9 border border-[#2d2d2d] rounded-2xl p-2.5 cursor-pointer transition-colors justify-center items-center text-sm text-white mt-14"
+                        onClick={handleEditProfileOpen}
+                    >
+                        Edit profile
+                    </div>
                 </div>
 
-                {/* Profile Stats */}
                 <div className="flex justify-between items-center p-5">
-                    <Link 
-                        href={'/main/UserProfile/threads'} 
-                        className="text-white hover:text-gray-300 transition-colors"
-                    >
+                    <Link href={'/main/UserProfile/threads'} className="text-[#777777] hover:text-gray-300 transition-colors">
                         Threads
                     </Link>
-                    <Link 
-                        href={'/main/UserProfile/reply'}
-                        className="text-white hover:text-gray-300 transition-colors"
-                    >
+                    <Link href={'/main/UserProfile/reply'} className="text-[#777777] hover:text-gray-300 transition-colors">
                         Replies
                     </Link>
-                    <Link 
-                        href={'/main/UserProfile/repost'}
-                        className="text-white hover:text-gray-300 transition-colors"
-                    >
+                    <Link href={'/main/UserProfile/repost'} className="text-[#777777] hover:text-gray-300 transition-colors">
                         Reposts
                     </Link>
                 </div>

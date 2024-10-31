@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import axiosInstance from '@/API/axiosinstance';
 
 interface EditProfileProps {
@@ -65,17 +64,15 @@ const EditProfile: React.FC<EditProfileProps> = ({ isOpen, onClose }) => {
 
             const response = await axiosInstance.patch(`/users/${localStorage.getItem('userId')}`, formData);
             if (response.status === 200) {
-                localStorage.setItem('user',(response.data.user));
-
-                onClose();
+                localStorage.setItem('user', JSON.stringify(response.data.user)); // Store user data
+                onClose(); 
             }
         } catch (error) {
             console.log('Error updating profile:', error);
-
         }
     };
 
-    if (!isOpen) return null
+    if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -97,25 +94,31 @@ const EditProfile: React.FC<EditProfileProps> = ({ isOpen, onClose }) => {
                             onChange={(e) => setName(e.target.value)}
                             className="p-3 rounded bg-neutral-800 text-white w-full border-none"
                         />
-                        <div className="mt-4">
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={handleFileChange}
-                                className="hidden"
-                                accept="image/*"
-                            />
-                            {previewImage && (
-                                <div className="mt-2">
-                                    <img 
-                                        src={previewImage} 
-                                        alt="Profile Preview" 
-                                        className="w-12 h-12 rounded-full object-cover cursor-pointer"
-                                        onClick={() => fileInputRef.current?.click()} 
-                                    />
-                                </div>
-                            )}
-                        </div>
+                    </div>
+                    <div className="mt-4">
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleFileChange}
+                            className="hidden"
+                            accept="image/*"
+                        />
+                        {previewImage && (
+                            <div className="mt-2">
+                                <img 
+                                    src={previewImage} 
+                                    alt="Profile Preview" 
+                                    className="w-12 h-12 rounded-full object-cover cursor-pointer"
+                                    onClick={() => fileInputRef.current?.click()} 
+                                />
+                            </div>
+                        )}
+                        {/* <div
+                            onClick={handleImageUpload}
+                            className="bg-gray-700 text-white p-2 rounded mt-2"
+                        >
+                            Upload Image
+                        </div> */}
                     </div>
 
                     <div className="flex flex-col">
@@ -150,6 +153,8 @@ const EditProfile: React.FC<EditProfileProps> = ({ isOpen, onClose }) => {
                             className="p-3 rounded bg-neutral-800 text-white w-full border-none"
                         />
                     </div>
+
+                   
 
                     <button 
                         type="submit" 
