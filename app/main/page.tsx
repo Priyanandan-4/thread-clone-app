@@ -71,7 +71,7 @@ const Page: React.FC = () => {
                 <hr className="border-t border-[#2d2d2d] my-4 w-full" />
 
                 
-                    {posts.map((post: any) => (
+                    {posts.map((post) => (
                         <div key={post._id} className="text-white mb-4">
                             <div className="flex items-center">
                                 <img

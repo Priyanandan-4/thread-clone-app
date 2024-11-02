@@ -46,11 +46,9 @@ const Profile: React.FC = () => {
         <div className="w-full bg-transparent">
             <EditProfile isOpen={isEditModalOpen} onClose={handleEditProfileClose} />
 
-            <h1 className="h-[60px] flex items-center justify-center text-white text-xl bg-transparent z-[1000]">
-                Profile
-            </h1>
+           
 
-            <div className="bg-[#181818] rounded-3xl h-screen fixed w-[640px] border border-[#2d2d2d]">
+            <div>
                 {/* Profile Section */}
                 <div className="flex justify-between items-center h-[140px] w-full p-5">
                     <div className="text-white">
@@ -78,7 +76,7 @@ const Profile: React.FC = () => {
                 </div>
 
                 <div className="flex justify-between items-center p-5">
-                    <Link href={'/main/UserProfile/threads'} className="text-[#777777] hover:text-gray-300 transition-colors">
+                    <Link href={'/main/UserProfile'} className="text-[#777777] hover:text-gray-300 transition-colors ">
                         Threads
                     </Link>
                     <Link href={'/main/UserProfile/reply'} className="text-[#777777] hover:text-gray-300 transition-colors">

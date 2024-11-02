@@ -50,6 +50,7 @@ const SideBar = () => {
           
           className='m-5 mt-10 '
           />
+          <Link href='/main/Activity'>
             <Image
           src={HEART}
           alt='search'
@@ -58,6 +59,7 @@ const SideBar = () => {
           
           className='m-5 mt-10'
           />
+          </Link>
           <Link href='/main/UserProfile'>
             <Image
           src={USER}

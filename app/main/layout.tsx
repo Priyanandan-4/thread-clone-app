@@ -18,7 +18,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       <SideBar />
       </div>
 
-      {/* Main ContentCentered */}
+     
       <div className="w-[640px]">
         {children}
 
