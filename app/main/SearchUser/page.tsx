@@ -127,7 +127,7 @@ const SearchPage: React.FC = () => {
                         className="flex-grow outline-none text-lg text-gray-300 px-10 py-2 bg-black border border-[#2d2d2d] rounded-2xl w-[607px]"
                     />
                 </div>
-
+              <h6 className='text-sm '>Follow suggestions</h6>
               
                 <div >
                     {filteredUsers.length > 0 ? (
