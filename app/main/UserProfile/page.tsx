@@ -2,64 +2,108 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from "@/app/hooks/useAppDispatch";
-import { RootState } from "@/store/store";
 import axiosInstance from '@/API/axiosinstance';
-
+import TimeAgo from '@/components/timeEgo/time';
+import LikeButton from '@/components/likeButton/likeButton';
+import { FaRegComment } from 'react-icons/fa6';
 
 const UserDetails: React.FC = () => {
-  const { posts } = useAppSelector((state: RootState) => state.posts);
- const [post,setPosts]=useState<any>([])
-const dispatch=useAppDispatch()
+    const dispatch = useAppDispatch();
+    const [isCommentModalOpen, setCommentModalOpen] = useState(false);
+    const [currentPostId, setCurrentPostId] = useState<string | null>(null);
+    const [posts, setPosts] = useState<Post[]>([]);
 
-  const {users} = useAppSelector((state : RootState ) =>state.users)
+    type Post = {
+        _id: string;
+        userProfilePic: string;
+        username: string;
+        text: string;
+        image: string;
+        createdOn: string;
+        replies: Reply[];
+        likes: string[];
+        reposts: string[];
+    };
 
-  type post = {
-    _id: string;
-    userProfilePic: string;
-    username: string;
-    text: string;
-    image: string;
-    createdOn: string;
-    replies: any[];
-    likes: string[];
-    reposts: string[];
-    postById:string
-};
+    type Reply = {
+        _id: string;
+        userId: string;
+        userProfilePic: string;
+        username: string;
+        text: string;
+    };
 
+    const fetchPosts = async () => {
+        try {
+            const userId = localStorage.getItem('userId');
+            if (userId) {
+                const response = await axiosInstance.get(`/posts/${userId}`);
+                setPosts(response.data.post);
+            }
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
 
+    useEffect(() => {
+        fetchPosts();
+    }, []);
 
+    return (
+        <div className='ml-10'>
+            {posts.length > 0 ? (
+                posts.map((post) => (
+                    <div key={post._id} className="mb-4">
+                        <div className="flex items-center mb-2">
+                            <img
+                                src={post.userProfilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+                                className="w-10 h-10 rounded-full object-cover mr-3"
+                                alt="User Profile"
+                            />
+                            <span className="font-bold">{post.username || "Unknown User"}</span>
+                            <p className="text-gray-400 ml-2 mt-2 text-xs">
+                                <TimeAgo time={post.createdOn} />
+                            </p>
 
+                        </div>
+                        <div>
+                                    <p className="ml-5 ">{post.text}</p>
+                                </div>
 
-const fetchPosts = async () => {
-  try {
-      const userId = localStorage.getItem('userId');
-      if (userId) {
-          const response = await axiosInstance.get(`api/posts/${userId}`);
-          setPosts(response.data.post);
-      }
-  } catch (error) {
-      console.error('Error fetching posts:', error);
-  }
-};
+                        <div>  {post.image && (
+                            <img
+                                src={post.image}
+                                alt="Post"
+                                className="max-h-[400px] rounded-lg ml-5 max-w-md"
+                            />
+                        )}</div>
 
-// useEffect(() => {
-  
-//   dispatch(fetchPosts);
-// }, [dispatch]);
-
-  return (
-    <>
-    <div>
-      {posts.map((post) => (
-         <img
-         src={post.image}
-         alt="Post"
-         className="max-h-[400px] mt-2 rounded-lg ml-5 max-w-md"
-     />
-      ))}
-      </div>
-    </>
-  );
+                       
+                        <div className="flex mt-2 ml-5">
+                            <LikeButton
+                                initialLike={post.likes.length}
+                                postId={post._id}
+                                likedUsers={post.likes} 
+                            />
+                            <div className="flex items-center ml-2">
+                                <FaRegComment
+                                    style={{ fontSize: '18px' }}
+                                  
+                                />
+                                {post.replies.length > 0 && (
+                                    <span className="ml-1">
+                                        {post.replies.length}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                ))
+            ) : (
+                <p>No posts available.</p>
+            )}
+        </div>
+    );
 };
 
 export default UserDetails;

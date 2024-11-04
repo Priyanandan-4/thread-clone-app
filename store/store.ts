@@ -3,6 +3,7 @@ import loginSlice from "./reducer/loginSlice";
 import postsReducer from "./reducer/postsSlice";
 import userSlice from "./reducer/userSlice";
 import signupSlice from "./reducer/signupSlice";
+import modalSlice from './reducer/modalSlice'
 
 
 
@@ -12,7 +13,8 @@ export const store=configureStore({
         users:userSlice,
         posts:postsReducer,
         login:loginSlice,
-        Signup:signupSlice
+        Signup:signupSlice,
+        modal:modalSlice
     }
 })
 

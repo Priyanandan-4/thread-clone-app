@@ -11,17 +11,20 @@ import LikeButton from "@/components/likeButton/likeButton";
 import TimeAgo from "@/components/timeEgo/time";
 import Reply from "@/components/ReplayModal/replymodal";
 import { fetchUser } from "@/store/reducer/userSlice";
+import Repost from "@/components/repost/repost";
+import RepostButton from "@/components/repostbutton/repostButton";
 
 const Page: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { posts, status } = useSelector((state: RootState) => state.posts);
+    const { posts } = useSelector((state: RootState) => state.posts);
     const { users } = useAppSelector((state: RootState) => state.users);
     
-    const [user, setUser] = useState<any>([]);
-    
+    const [user, setUser] = useState<any>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isCommentModalOpen, setCommentModalOpen] = useState(false);
     const [currentPostId, setCurrentPostId] = useState<string | null>(null);
+    const [isRepostOpen, setIsRepostOpen] = useState(false);
+    const [postId, setPostId] = useState<string | null>(null);
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
@@ -36,6 +39,11 @@ const Page: React.FC = () => {
         dispatch(fetchPosts());
     }, [dispatch]);
 
+    const openRepostModal = (postId: string) => {
+        setPostId(postId);
+        setIsRepostOpen(true);
+    };
+
     return (
         <div className="flex flex-col h-screen">
             <div className="h-[60px] text-xl flex items-center justify-center bg-black text-white">
@@ -47,9 +55,9 @@ const Page: React.FC = () => {
                     isOpen={isCommentModalOpen}
                     onClose={() => setCommentModalOpen(false)}
                     postId={currentPostId || ""}
-                    userProfilePic={user.profilePic}
-                    userId={user._id}
-                    username={user.username}
+                    userProfilePic={user?.profilePic}
+                    userId={user?._id}
+                    username={user?.username}
                 />
 
                 <Threads isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -70,60 +78,71 @@ const Page: React.FC = () => {
 
                 <hr className="border-t border-[#2d2d2d] my-4 w-full" />
 
-                
-                    {posts.map((post) => (
-                        <div key={post._id} className="text-white mb-4">
-                            <div className="flex items-center">
-                                <img
-                                    src={post.postById?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
-                                    className="w-10 h-10 rounded-full object-cover mr-3"
-                                    alt="User Profile"
-                                />
-                                <div>
-                                    <div className="flex flex-row items-center">
-                                        <p className="font-bold mt-2">{post.postById.username || "Unknown User"}</p>
-                                        <p className="text-gray-400 ml-2 mt-2 text-xs">
-                                            <TimeAgo time={post.createdOn} />
-                                        </p>
-                                    </div>
-                                    <p className="mt-2">{post.text}</p>
+                {posts.map((post: any) => (
+                    <div key={post._id} className="text-white mb-4">
+                        <div className="flex items-center">
+                            <img
+                                src={post.postById?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+                                className="w-10 h-10 rounded-full object-cover mr-3"
+                                alt="User Profile"
+                            />
+                            <div>
+                                <div className="flex flex-row items-center">
+                                    <p className="font-bold mt-2">{post.postById.username || "Unknown User"}</p>
+                                    <p className="text-gray-400 ml-2 mt-2 text-xs">
+                                        <TimeAgo time={post.createdOn} />
+                                    </p>
                                 </div>
+                                <p className="mt-2">{post.text}</p>
                             </div>
-
-                            {post.image && (
-                                <img
-                                    src={post.image}
-                                    alt="Post"
-                                    className="max-h-[400px] mt-2 rounded-lg ml-5 max-w-md"
-                                />
-                            )}
-                            <div className="mt-3 ml-5 flex space-x-4 items-center">
-                                <LikeButton
-                                    initialLike={post.likes.length}
-                                    postId={post._id}
-                                    userId={user?._id}
-                                    likedUsers={post.likes}
-                                />
-                                <div className="flex items-center">
-                                    <FaRegComment  style={{ fontSize: '18px' }}
-                                        // className="text-2xl cursor-pointer "
-                                        onClick={() => {
-                                            setCurrentPostId(post._id);
-                                            setCommentModalOpen(true);
-                                        }}
-                                    />
-                                    {post.replies && (
-                                        <span className="ml-1 ">
-                                            {post.replies.length} 
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                            <hr className="border-t border-[#2d2d2d] my-4 w-full" />
                         </div>
-                        
-                    ))
-                }
+
+                        {post.image && (
+                            <img
+                                src={post.image}
+                                alt="Post"
+                                className="max-h-[400px] mt-2 rounded-lg ml-5 max-w-md"
+                            />
+                        )}
+                        <div className="mt-3 ml-5 flex space-x-4 items-center">
+                            <LikeButton
+                                initialLike={post.likes.length}
+                                postId={post._id}
+                                userId={user?._id}
+                                likedUsers={post.likes}
+                            />
+                            <div className="flex items-center">
+                                <FaRegComment
+                                   style={{ fontSize: '18px' }}
+                                    onClick={() => {
+                                        setCurrentPostId(post._id);
+                                        setCommentModalOpen(true);
+                                    }}
+                                />
+                                {post.replies && (
+                                    <span className="ml-1">{post.replies.length}</span>
+                                )}
+                              
+                            </div>
+                            <div className="ml-5">
+                            <RepostButton
+                                
+                                repostCount={post.reposts.length}
+                                postId={post._id}
+                                setPostId={openRepostModal}
+                            />
+                            </div>
+                        </div>
+                        <hr className="border-t border-[#2d2d2d] my-4 w-full" />
+                    </div>
+                ))}
+
+                <Repost
+                   
+                    postId={postId || ""}
+                    userProfilePic={user?.profilePic}
+                    username={user?.username}
+                />
             </div>
         </div>
     );
