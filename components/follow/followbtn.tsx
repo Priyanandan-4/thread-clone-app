@@ -11,7 +11,7 @@ const FollowBtn: React.FC<FollowButtonProps> = ({ userId }) => {
 
     const followCheck = async () => {
         try {
-            const res = await axiosInstance.get(`api/users/${userId}`);
+            const res = await axiosInstance.get(`/users/${userId}`);
             const user = res.data.user;
             // Assuming user has a property that indicates if the sender is following them
             setIsFollowing(user.isFollowed); // Adjust based on your API response
@@ -28,10 +28,10 @@ const FollowBtn: React.FC<FollowButtonProps> = ({ userId }) => {
         
         try {
             if (isFollowing) {
-                await axiosInstance.post(`api/users/unfollow/${userId}`, { userUnfollowId: senderId });
+                await axiosInstance.post(`/users/unfollow/${userId}`, { userUnfollowId: senderId });
                 setIsFollowing(false);
             } else {
-                await axiosInstance.post(`api/users/follow/${userId}`, { userFollowId: senderId });
+                await axiosInstance.post(`/users/follow/${userId}`, { userFollowId: senderId });
                 setIsFollowing(true);
             }
         } catch (error) {

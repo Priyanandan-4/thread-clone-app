@@ -8,7 +8,7 @@ import { useAppDispatch,useAppSelector } from '../hooks/useAppDispatch';
 
 function Layout({ children }: { children: React.ReactNode }) {
   
-  const { user } = useAppSelector((state) => state.login); 
+ 
  
 
   return (

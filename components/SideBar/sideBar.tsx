@@ -11,12 +11,16 @@ import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { deleteCookie } from '@/API/cookie/deletecookies';
+import { useAppDispatch } from '@/app/hooks/useAppDispatch';
+import { openModal } from '@/store/reducer/modalSlice';
+
 
 
 
 
 const SideBar :React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dispatch = useAppDispatch()
   const router = useRouter()
 
   const handleLogout = async () => {
@@ -60,7 +64,7 @@ const SideBar :React.FC = () => {
           className='m-5 mt-10 '
           />
           </Link>
-            <Image
+            <Image onClick={()=>dispatch(openModal())}
           src={PLUS}
           alt='search'
           height={22}

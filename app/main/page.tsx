@@ -20,7 +20,9 @@ const Page: React.FC = () => {
     const { users } = useAppSelector((state: RootState) => state.users);
     
     const [user, setUser] = useState<any>(null);
+    
     const [isModalOpen, setIsModalOpen] = useState(false);
+
     const [isCommentModalOpen, setCommentModalOpen] = useState(false);
     const [currentPostId, setCurrentPostId] = useState<string | null>(null);
     const [isRepostOpen, setIsRepostOpen] = useState(false);
@@ -108,7 +110,7 @@ const Page: React.FC = () => {
                             <LikeButton
                                 initialLike={post.likes.length}
                                 postId={post._id}
-                                userId={user?._id}
+                               
                                 likedUsers={post.likes}
                             />
                             <div className="flex items-center">

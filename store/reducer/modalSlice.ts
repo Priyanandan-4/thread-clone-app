@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface ModalState {
-    isModalOpen: boolean;
+    isCommentModalOpen: boolean;
     isCommentOpen: boolean;
     isRepostOpen: boolean;
 }
 
 const initialState: ModalState = {
-    isModalOpen: false,
+    isCommentModalOpen: false,
     isCommentOpen: false,
     isRepostOpen: false,
 };
@@ -17,10 +17,10 @@ const modalSlice = createSlice({
     initialState,
     reducers: {
         openModal(state) {
-            state.isModalOpen = true;
+            state.isCommentModalOpen = true;
         },
         closeModal(state) {
-            state.isModalOpen = false;
+            state.isCommentModalOpen = false;
         },
         openComment(state) {
             state.isCommentOpen = true;
