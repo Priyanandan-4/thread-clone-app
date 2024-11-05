@@ -7,9 +7,27 @@ import SGRAY from '../../public/img/search-gray.svg'
 import PLUS from '../../public/img/plus.svg'
 import Image from 'next/image';
 import Link from 'next/link';
+import { HiOutlineMenuAlt2 } from 'react-icons/hi';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { deleteCookie } from '@/API/cookie/deletecookies';
 
 
-const SideBar = () => {
+
+
+const SideBar :React.FC = () => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const router = useRouter()
+
+  const handleLogout = async () => {
+      await deleteCookie();
+      router.push('/login');
+  };
+
+  const toggleDropdown = () => {
+      setDropdownOpen(prev => !prev);
+  };
+
   return (
     <div>
         <div className='ml-1 h-screen w-20'>
@@ -70,7 +88,25 @@ const SideBar = () => {
           className='m-5 mt-10 '
           />
           </Link>
-          
+
+           
+    
+          <HiOutlineMenuAlt2
+            className="m-5 mt-48 cursor-pointer"
+            size={23}
+            onClick={toggleDropdown}
+          />
+         
+          {dropdownOpen && (
+            <div>
+              <button
+                className="absolute  bg-[#2d2d2d] w-24 rounded-2xl bottom-5 bg-transparent p-2.5 z-[101] ml-[80px] mt-[100px]"
+                onClick={handleLogout}
+              >
+                Log out
+              </button>
+            </div>
+          )}
           </div>
         </div>
     </div>

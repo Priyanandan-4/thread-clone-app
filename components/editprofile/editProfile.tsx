@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '@/API/axiosinstance';
+import { useAppDispatch } from '@/app/hooks/useAppDispatch';
+import { fetchUser } from '@/store/reducer/userSlice';
 
 interface EditProfileProps {
     isOpen: boolean;
@@ -14,6 +16,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ isOpen, onClose }) => {
     const [profilePic, setProfilePic] = useState<File | null>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (isOpen) {
@@ -66,6 +69,8 @@ const EditProfile: React.FC<EditProfileProps> = ({ isOpen, onClose }) => {
             if (response.status === 200) {
                 localStorage.setItem('user', JSON.stringify(response.data.user)); // Store user data
                 onClose(); 
+                dispatch(fetchUser())
+
             }
         } catch (error) {
             console.log('Error updating profile:', error);
@@ -113,12 +118,12 @@ const EditProfile: React.FC<EditProfileProps> = ({ isOpen, onClose }) => {
                                 />
                             </div>
                         )}
-                        {/* <div
+                        <button
                             onClick={handleImageUpload}
-                            className="bg-gray-700 text-white p-2 rounded mt-2"
+                            className="bg-[#2d2d2d] text-white p-2 rounded mt-2"
                         >
                             Upload Image
-                        </div> */}
+                        </button>
                     </div>
 
                     <div className="flex flex-col">
