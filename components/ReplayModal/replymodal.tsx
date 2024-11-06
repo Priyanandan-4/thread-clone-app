@@ -67,7 +67,7 @@ const Reply: React.FC<ReplyProps> = ({ isOpen, onClose, postId, userId, userProf
     return (
         <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50  ">
             <div className="bg-[#181818] rounded-lg shadow-lg w-[400px] h-[600px] flex flex-col animate-fadeIn  ">
-                <div className="p-3 border-b border-gray-600">
+                <div>
                     <button 
                         className="text-2xl text-gray-500 hover:text-gray-300 transition-colors" 
                         onClick={onClose}
@@ -90,20 +90,15 @@ const Reply: React.FC<ReplyProps> = ({ isOpen, onClose, postId, userId, userProf
                                     <img
                                         src={post.image}
                                         alt="Post"
-                                        className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
-                                            imageLoaded ? 'opacity-100' : 'opacity-0'
-                                        }`}
-                                        
+                                        className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${imageLoaded}`}
                                     />
                                 </div>
                             )}
-                            <div className="border-b border-gray-600 mb-2"></div>
+                            <div className="border-b border-[#2d2d2d] mb-2"></div>
                         </div>
                     )}
 
                     <div className="mb-3"></div>
-
-                    {/* Replies Section */}
                     <div className="space-y-2">
                         {post?.replies?.length > 0 ? (
                             [...post.replies].reverse().map((reply: any, index: number) => (
@@ -119,27 +114,25 @@ const Reply: React.FC<ReplyProps> = ({ isOpen, onClose, postId, userId, userProf
                         )}
                     </div>
                 </div>
-
-                {/* Footer - Fixed size */}
-                <div className="p-3 border-t border-gray-600">
+                <div className="p-2">
                     {error && <p className="text-red-500 text-xs mb-2">{error}</p>}
                     
-                    <div className="mb-2">
+                    <div className="mb-2 flex justify-center">
                         <input
                             placeholder="Add your comment..."
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
-                            className="w-full p-2 border border-gray-400 rounded-lg text-black text-sm"
+                            className="w-[330px] p-2   border border-[#2d2d2d] bg-[#181818] rounded-lg text-sm bg-"
                         />
                     </div>
 
                     <div className="flex justify-end">
                         <button
-                            className="bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 text-sm"
+                            className="bg-[#2d2d2d] text-white px-3 py-1.5 rounded-2xl mt-2 ml-5 mr-2 text-sm h-10 w-16"
                             onClick={handleReplySubmit}
                             disabled={loading}
                         >
-                            {loading ? 'Posting...' : 'Post'}
+                            {loading ? 'Posting' : 'Post'}
                         </button>
                     </div>
                 </div>

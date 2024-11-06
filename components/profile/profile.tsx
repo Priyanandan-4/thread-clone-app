@@ -79,12 +79,12 @@ const Profile: React.FC = () => {
                     <Link href={'/main/UserProfile'} className="text-[#777777] hover:text-gray-300 transition-colors ">
                         Threads
                     </Link>
-                    <Link href={'/main/UserProfile/reply'} className="text-[#777777] hover:text-gray-300 transition-colors">
+                    {/* <Link href={'/main/UserProfile/reply'} className="text-[#777777] hover:text-gray-300 transition-colors">
                         Replies
                     </Link>
                     <Link href={'/main/UserProfile/repost'} className="text-[#777777] hover:text-gray-300 transition-colors">
                         Reposts
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
         </div>

@@ -39,7 +39,7 @@ export default async function ActivityPage() {
         <div>
             <div className="h-[60px] flex  items-center justify-center w-[640px] text-white text-xl bg-black fixed  top-0 z-10">Activity</div>
             <div className='bg-[#181818] w-[640px]   border border-[#2d2d2d] mt-[60px] h-screen rounded-2xl fixed no-scrollbar overflow-y-auto '>
-                <div className='ml-3 mt-5'>
+                <div className='ml-3 py-2 '>
               {notifications.length === 0 ? (
                     <p>No notifications available...</p>
               ) : (
@@ -47,7 +47,7 @@ export default async function ActivityPage() {
                 notifications.map((notification) => (
                     <div key={notification._id} className="border-b border-[#383939] py-4">
                         <div className="flex items-center">
-                            <div className="p-3">
+                            <div className="">
                                 <ProfileImage 
                                     profilePic={notification.senderUserId.profilePic}
                                     altText="profile"
@@ -56,7 +56,7 @@ export default async function ActivityPage() {
                             </div>
                             <div className="flex flex-col justify-start ml-2">
                                 <div className="text-white">{notification.senderUserId.name}</div>
-                                <div className="text-gray-400">{notification.description}</div>
+                                <div className="text-neutral-400 ">{notification.description}</div>
                             </div>
                         </div>
                     </div>
@@ -66,15 +66,3 @@ export default async function ActivityPage() {
         </div>
     );
 };
-{/* <>
-<div className='flex flex-col items-center min-h-screen text-white'>
-  <h1 className="h-[60px] flex  items-center justify-center w-[640px] text-white text-xl bg-black fixed  top-0 z-10">
-           Activity
-        </h1>
-        <div className='bg-[#181818] w-[640px]   border border-[#2d2d2d] mt-[60px] h-screen rounded-2xl fixed no-scrollbar overflow-y-auto '>hi
-            
-        </div>
-      
-</div>
-
-</> */}

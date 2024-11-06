@@ -12,7 +12,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { deleteCookie } from '@/API/cookie/deletecookies';
 import { useAppDispatch } from '@/app/hooks/useAppDispatch';
-import { openModal } from '@/store/reducer/modalSlice';
+import PlusBtn from '../../components/plusButton/plus'
+// import { openModal } from '@/store/reducer/modalSlice';
+import Threads from '../threads/postModal';
 
 
 
@@ -22,7 +24,7 @@ const SideBar :React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useAppDispatch()
   const router = useRouter()
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const handleLogout = async () => {
       await deleteCookie();
       router.push('/login');
@@ -35,6 +37,12 @@ const SideBar :React.FC = () => {
   return (
     <div>
         <div className='ml-1 h-screen w-20'>
+
+
+        <Threads isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    <h2 className="text-white">Create a new post</h2>
+                </Threads>
+
           <Link href='/main'>
           <Image
           src={THREAD}
@@ -64,14 +72,7 @@ const SideBar :React.FC = () => {
           className='m-5 mt-10 '
           />
           </Link>
-            <Image onClick={()=>dispatch(openModal())}
-          src={PLUS}
-          alt='search'
-          height={22}
-          width={22}
-          
-          className='m-5 mt-10 '
-          />
+          <PlusBtn onClick={() => setIsModalOpen(true)}/>
           <Link href='/main/Activity'>
             <Image
           src={HEART}

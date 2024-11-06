@@ -3,6 +3,7 @@ import PostBtn from '../postbutton/postBtn';
 import axiosInstance from '@/API/axiosinstance';
 import { useAppDispatch } from '@/app/hooks/useAppDispatch';
 import { fetchPosts } from '@/store/reducer/postsSlice';
+import PlusBtn from '../plusButton/plus';
 
 interface ThreadsProps {
   isOpen: boolean;
@@ -100,6 +101,7 @@ const Threads: React.FC<ThreadsProps> = ({ isOpen, onClose, children }) => {
           </div>
           <div className="mt-3 flex justify-end">
             <PostBtn onClick={handlePostSubmit} />
+          
           </div>
         </div>
       </div>

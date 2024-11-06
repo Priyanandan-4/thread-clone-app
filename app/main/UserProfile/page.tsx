@@ -8,9 +8,7 @@ import LikeButton from '@/components/likeButton/likeButton';
 import { FaRegComment } from 'react-icons/fa6';
 
 const UserDetails: React.FC = () => {
-    const dispatch = useAppDispatch();
-    const [isCommentModalOpen, setCommentModalOpen] = useState(false);
-    const [currentPostId, setCurrentPostId] = useState<string | null>(null);
+
     const [posts, setPosts] = useState<Post[]>([]);
 
     type Post = {
@@ -60,7 +58,7 @@ const UserDetails: React.FC = () => {
                                 className="w-10 h-10 rounded-full object-cover mr-3"
                                 alt="User Profile"
                             />
-                            <span className="font-bold">{post.username || "Unknown User"}</span>
+                            <span className="font-bold">{post.username || "priya_n"}</span>
                             <p className="text-gray-400 ml-2 mt-2 text-xs">
                                 <TimeAgo time={post.createdOn} />
                             </p>
