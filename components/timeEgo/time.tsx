@@ -12,7 +12,7 @@ const TimeAgo: React.FC<TimeAgoProps> = ({ time }) => {
 
         const intervals = [
             { limit: 31536000, label: 'y' }, 
-            { limit: 2592000, label: 'm' },   
+            { limit: 2592000, label: 'month' },   
             { limit: 86400, label: 'd' },    
             { limit: 3600, label: 'h' },     
             { limit: 60, label: 'min' }      

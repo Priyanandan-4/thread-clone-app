@@ -148,11 +148,6 @@ const SearchPage: React.FC = () => {
                                     </div>
                                      
                                 </div>
-                                 
-                                 
-                              
-                                 
-                               
                                 {currentUser && currentUser._id !== user._id && (
                                     <Followbtn userId={user._id}/>
                                     

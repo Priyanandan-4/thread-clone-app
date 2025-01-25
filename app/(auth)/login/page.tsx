@@ -1,10 +1,5 @@
- 
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import BG from '../../../public/img/bg.webp';
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
-import { useRouter } from 'next/navigation';
 import LoginForm from '@/components/loginForm/LoginForm';
 import axiosInstance from '@/API/axiosinstance';
  

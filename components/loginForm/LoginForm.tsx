@@ -19,6 +19,7 @@ const LoginForm = () => {
             const userID = user._id;
             await setCookie(userID); 
             router.push('/main');
+            localStorage.setItem('userid',userID)
         }
     };
 

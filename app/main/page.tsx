@@ -66,7 +66,7 @@ const Page: React.FC = () => {
                     <h2 className="text-white">Create a new post</h2>
                 </Threads>
 
-                <div className="flex items-center justify-between mb-4">
+                <div  className="flex items-center justify-between mb-4">
                     <div className="flex items-center">
                         <img
                             src={user?.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
@@ -90,7 +90,7 @@ const Page: React.FC = () => {
                             />
                             <div>
                                 <div className="flex flex-row items-center">
-                                    <p className="font-bold mt-2">{post.postById.username || "Unknown User"}</p>
+                                    <p className="font-bold mt-2">{post.postById?.username || "Unknown User"}</p>
                                     <p className="text-gray-400 ml-2 mt-2 text-xs">
                                         <TimeAgo time={post.createdOn} />
                                     </p>
@@ -140,7 +140,6 @@ const Page: React.FC = () => {
                 ))}
 
                 <Repost
-                   
                     postId={postId || ""}
                     userProfilePic={user?.profilePic}
                     username={user?.username}

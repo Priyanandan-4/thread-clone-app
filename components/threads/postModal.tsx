@@ -1,9 +1,9 @@
 import React, { ReactNode, useState } from 'react';
 import PostBtn from '../postbutton/postBtn';
 import axiosInstance from '@/API/axiosinstance';
-import { useAppDispatch } from '@/app/hooks/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '@/app/hooks/useAppDispatch';
 import { fetchPosts } from '@/store/reducer/postsSlice';
-import PlusBtn from '../plusButton/plus';
+import { RootState } from '@/store/store';
 
 interface ThreadsProps {
   isOpen: boolean;
@@ -16,8 +16,12 @@ const Threads: React.FC<ThreadsProps> = ({ isOpen, onClose, children }) => {
   const [postImage, setPostImage] = useState<any>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const dispatch = useAppDispatch();
+
+
+
   const handlePostSubmit = async () => {
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('userid');
+    console.log(userId)
 
    
 
@@ -61,7 +65,7 @@ const Threads: React.FC<ThreadsProps> = ({ isOpen, onClose, children }) => {
       reader.onloadend = () => {
         setPreview(reader.result as string);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); 
     }
   };
 

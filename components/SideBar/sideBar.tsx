@@ -4,7 +4,6 @@ import USER from '../../public/img/user.svg'
 import HOME from '../../public/img/home.svg'
 import HEART from '../../public/img/heart-gray.svg'
 import SGRAY from '../../public/img/search-gray.svg'
-import PLUS from '../../public/img/plus.svg'
 import Image from 'next/image';
 import Link from 'next/link';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
